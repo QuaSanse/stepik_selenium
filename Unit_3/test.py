@@ -1,3 +1,1 @@
 print("Hi")
-
-print("One")
