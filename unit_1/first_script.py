@@ -1,5 +1,5 @@
 import time
-from chromedriver.main import driver
+from support.main import driver
 
 # webdriver это и есть набор команд для управления браузером
 from selenium import webdriver
