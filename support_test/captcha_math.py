@@ -1,5 +1,5 @@
 import math
-from support.main import driver
+from support_test.conftest import driver
 from selenium.webdriver.common.by import By
 
 

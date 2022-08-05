@@ -1,5 +1,5 @@
 import time
-from support.main import driver
+from support_test.conftest import driver
 
 # webdriver это и есть набор команд для управления браузером
 from selenium import webdriver
@@ -8,7 +8,8 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 
 # инициализируем драйвер браузера. После этой команды вы должны увидеть новое открытое окно браузера
-# driver = webdriver.Chrome(executable_path='C:\\projects\\stepik_selenium\\chromedriver\\chromedriver.exe')
+driver = webdriver.Chrome(
+    executable_path='C:\\projects\\stepik_selenium\\chromedriver\\chromedriver.exe')
 
 # команда time.sleep устанавливает паузу в 5 секунд, чтобы мы успели увидеть, что происходит в браузере
 time.sleep(5)
