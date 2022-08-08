@@ -1,5 +1,5 @@
 import time
-from support_test.conftest import driver
+from tests.conftest import driver
 
 # webdriver это и есть набор команд для управления браузером
 from selenium import webdriver
