@@ -41,33 +41,59 @@ import pytest
 import time
 import math
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 
 
 class TestPageFeedback():
 
     # для сообщения
     feedback_text = ""
+
     # массив со списком адресов
     links = [
         "https://stepik.org/lesson/236895/step/1",
-        # "https://stepik.org/lesson/236896/step/1",
-        # "https://stepik.org/lesson/236897/step/1",
-        # "https://stepik.org/lesson/236898/step/1",
-        # "https://stepik.org/lesson/236899/step/1",
-        # "https://stepik.org/lesson/236903/step/1",
-        # "https://stepik.org/lesson/236904/step/1",
-        # "https://stepik.org/lesson/236905/step/1"
+        "https://stepik.org/lesson/236896/step/1",
+        "https://stepik.org/lesson/236897/step/1",
+        "https://stepik.org/lesson/236898/step/1",
+        "https://stepik.org/lesson/236899/step/1",
+        "https://stepik.org/lesson/236903/step/1",
+        "https://stepik.org/lesson/236904/step/1",
+        "https://stepik.org/lesson/236905/step/1"
     ]
 
     @pytest.mark.parametrize('link', links)
     def test_feedback(self, setup, link):
+        # инициализируем драйвер
         driver = setup
+        # открываем страницу в браузере
         driver.get(link)
-        driver.implicity_wait(10)
-        input_textarea = driver.find_element(By.ID, 'ember87')
-        answer = math.log(int(time.time() + .5))
-        input_textarea.send_keys(answer)
+        # ждем пока загрузится элемент
+        # driver.implicity_wait(10)
+        input_textarea = WebDriverWait(driver, 20).until(
+            EC.visibility_of_element_located((By.CSS_SELECTOR, "textarea.textarea")))
+        # time.sleep(30)
+        # вводим текст в поле
+        # переменная для ввода в поле текста
+        input_textarea.send_keys(math.log(int(time.time())))
+        # нажимаем кнопку отправки текста
         button_send = driver.find_element(
             By.CSS_SELECTOR, 'button.submit-submission')
         button_send.click()
-        time.sleep(60)
+        # time.sleep(160)
+        # ожидаем результат
+        smart_hint = WebDriverWait(driver, 20).until(
+            EC.visibility_of_element_located(
+                (By.CSS_SELECTOR, 'p.smart-hints__hint'))
+        )
+        smart_hint_text = smart_hint.text
+        print(f" \n----  {smart_hint_text} ----- \n")
+
+        if smart_hint_text != "Correct!":
+            self.feedback_text += smart_hint_text
+            print(self.feedback_text)
+        # сравниваем текст ответа
+        assert smart_hint_text == "Correct!", "The text does not match the 'Correct!'"
+
+    # text_res = "".join(feedback_text)
+    # print(f"feedback: {text_res}")

@@ -11,7 +11,7 @@ def get_chrome_options() -> chrome_options:
     options.add_argument('crome')
     # Запуск в автономном режиме, т. е. без зависимостей пользовательского интерфейса или сервера отображения.
     options.add_argument('--start-maximized')
-    options.add_argument('--window-size=800,600')
+    options.add_argument('--window-size=1200,800')
     return options
 
 
