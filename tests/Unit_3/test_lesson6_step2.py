@@ -1,17 +1,16 @@
-# """
-#     Параметризация тестов
+"""
+    Параметризация тестов
+    @pytest.mark.parametrize()
 
-#     @pytest.mark.parametrize()
-
-
+"""
 #     pytest -s -v tests\Unit_3\test_lesson6_step2.py
-
-# """
-import pytest
-from selenium.webdriver.common.by import By
 
 
 # @pytest.mark.usefixtures('setup')
+
+
+import pytest
+from selenium.webdriver.common.by import By
 
 
 @pytest.mark.parametrize('language', ["ru", "en-gb"])

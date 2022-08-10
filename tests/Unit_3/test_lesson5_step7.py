@@ -4,7 +4,7 @@
 
     @pytest.mark.xfail(strict=True)
     
-    pytest -v -m "smoke and not beta_users" Unit_3\test_lesson5_step7.py
+    pytest -v -m "smoke and not beta_users" tests\Unit_3\test_lesson5_step7.py
     
 """
 
