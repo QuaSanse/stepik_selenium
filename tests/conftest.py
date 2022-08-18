@@ -5,12 +5,18 @@ from selenium.webdriver.firefox.options import Options as firefox_options
 
 
 def pytest_addoption(parser):
-    parser.addoption('--browser_name', action='store', default='chrome',
+    parser.addoption('--browser_name',
+                     action='store',
+                     default='chrome',
                      help="Choose browser: chrome or firefox")
+    parser.addoption('--language',
+                     action='store',
+                     default=None,
+                     help="Choose languages: ru, en, ... (etc.)")
 
 
 @pytest.fixture
-def get_chrome_options() -> chrome_options:
+def get_chrome_options(request) -> chrome_options:
     options = chrome_options()
     # --headless Запуск в автономном режиме, т. е. без зависимостей пользовательского интерфейса или сервера отображения.
     # options.add_argument('headless')
@@ -18,15 +24,21 @@ def get_chrome_options() -> chrome_options:
     # Запуск в автономном режиме, т. е. без зависимостей пользовательского интерфейса или сервера отображения.
     options.add_argument('--start-maximized')
     options.add_argument('--window-size=1200,1080')
+    user_language = request.config.getoption("language")  # язык пользователя
+    options.add_experimental_option(
+        'prefs', {'intl.accept_languages': user_language})
     return options
 
 
 @pytest.fixture
-def get_firefox_options() -> firefox_options:
+def get_firefox_options(request):
     options = firefox_options()
-    options.add_argument('firefox')
+    # options.add_argument('firefox')
     # options.add_argument('--start-maximized')
     # options.add_argument('--window-size=1200,1080')
+    # options = webdriver.FirefoxProfile()
+    user_language = request.config.getoption("language")  # язык пользователя
+    options.set_preference('prefs', {'intl.accept_languages': user_language})
     return options
 
 
@@ -43,10 +55,11 @@ def get_webdriver(request, get_chrome_options, get_firefox_options) -> webdriver
         )
         return driver
     elif browser_name == "firefox":
-        options = get_firefox_options
+        firefox_options = get_firefox_options
         print("\nstart Firefox browser for test...")
         driver = webdriver.Firefox(
-            executable_path='C:\\projects\\stepik_selenium\\geckodriver\\geckodriver.exe'
+            executable_path='C:\\projects\\stepik_selenium\\geckodriver\\geckodriver.exe',
+            firefox_profile=firefox_options
         )
         return driver
     else:

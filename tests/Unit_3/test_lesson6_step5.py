@@ -1,5 +1,5 @@
 # Установка Firefox и Selenium-драйвера geckodriver
-# pytest -s -v --browser_name=firefox tests\Unit_3\test_lesson6_step5.py
+# TODO pytest -s -v --browser_name=firefox tests\Unit_3\test_lesson6_step5.py
 
 
 from selenium import webdriver

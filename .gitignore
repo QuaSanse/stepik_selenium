@@ -4,3 +4,4 @@ chromedriver/__pycache__/main.cpython-310.pyc
 *.pyc
 geckodriver/geckodriver.exe
 geckodriver.log
+/.idea
